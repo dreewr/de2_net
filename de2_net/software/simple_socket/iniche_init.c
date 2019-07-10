@@ -9,18 +9,18 @@
 ******************************************************************************/
 
 /******************************************************************************
- * NicheStack TCP/IP stack initialization and Operating System Start in main()
- * for Simple Socket Server (SSS) example. 
- * 
- * This example demonstrates the use of MicroC/OS-II running on NIOS II.       
- * In addition it is to serve as a good starting point for designs using       
- * MicroC/OS-II and Altera NicheStack TCP/IP Stack - NIOS II Edition.                                                                                           
- *      
- * Please refer to the Altera NicheStack Tutorial documentation for details on 
- * this software example, as well as details on how to configure the NicheStack
- * TCP/IP networking stack and MicroC/OS-II Real-Time Operating System.  
- */
-  
+* NicheStack TCP/IP stack initialization and Operating System Start in main()
+* for Simple Socket Server (SSS) example.
+*
+* This example demonstrates the use of MicroC/OS-II running on NIOS II.
+* In addition it is to serve as a good starting point for designs using
+* MicroC/OS-II and Altera NicheStack TCP/IP Stack - NIOS II Edition.
+*
+* Please refer to the Altera NicheStack Tutorial documentation for details on
+* this software example, as well as details on how to configure the NicheStack
+* TCP/IP networking stack and MicroC/OS-II Real-Time Operating System.
+*/
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -47,138 +47,176 @@
 #include "LCD.h"
 #include "altera_avalon_pio_regs.h"
 /* Definition of task stack for the initial task which will initialize the NicheStack
- * TCP/IP Stack and then initialize the rest of the Simple Socket Server example tasks. 
- */
+* TCP/IP Stack and then initialize the rest of the Simple Socket Server example tasks.
+*/
 OS_STK    SSSInitialTaskStk[TASK_STACKSIZE];
 
 /* Declarations for creating a task with TK_NEWTASK.  
- * All tasks which use NicheStack (those that use sockets) must be created this way.
- * TK_OBJECT macro creates the static task object used by NicheStack during operation.
- * TK_ENTRY macro corresponds to the entry point, or defined function name, of the task.
- * inet_taskinfo is the structure used by TK_NEWTASK to create the task.
- */
+* All tasks which use NicheStack (those that use sockets) must be created this way.
+* TK_OBJECT macro creates the static task object used by NicheStack during operation.
+* TK_ENTRY macro corresponds to the entry point, or defined function name, of the task.
+* inet_taskinfo is the structure used by TK_NEWTASK to create the task.
+*/
 TK_OBJECT(to_ssstask);
 TK_ENTRY(SSSSimpleSocketServerTask);
 
 struct inet_taskinfo ssstask = {
-      &to_ssstask,
-      "simple socket server",
-      SSSSimpleSocketServerTask,
-      4,
-      APP_STACK_SIZE,
+  &to_ssstask,
+  "simple socket server",
+  SSSSimpleSocketServerTask,
+  4,
+  APP_STACK_SIZE,
 };
 
 /* SSSInitialTask will initialize the NicheStack
- * TCP/IP Stack and then initialize the rest of the Simple Socket Server example 
- * RTOS structures and tasks. 
- */
+* TCP/IP Stack and then initialize the rest of the Simple Socket Server example
+* RTOS structures and tasks.
+*/
 void SSSInitialTask(void *task_data)
 {
-  INT8U error_code;
-  
-  /*
-   * Initialize Altera NicheStack TCP/IP Stack - Nios II Edition specific code.
-   * NicheStack is initialized from a task, so that RTOS will have started, and 
-   * I/O drivers are available.  Two tasks are created:
-   *    "Inet main"  task with priority 2
-   *    "clock tick" task with priority 3
-   */   
-  alt_iniche_init();
-  netmain(); 
+INT8U error_code;
 
-  /* Wait for the network stack to be ready before proceeding. 
-   * iniche_net_ready indicates that TCP/IP stack is ready, and IP address is obtained.
-   */
-  while (!iniche_net_ready)
-    TK_SLEEP(1);
+/*
+* Initialize Altera NicheStack TCP/IP Stack - Nios II Edition specific code.
+* NicheStack is initialized from a task, so that RTOS will have started, and
+* I/O drivers are available.  Two tasks are created:
+*    "Inet main"  task with priority 2
+*    "clock tick" task with priority 3
+*/
+alt_iniche_init();
+netmain();
 
-  /* Now that the stack is running, perform the application initialization steps */
-  
-  /* Application Specific Task Launching Code Block Begin */
+/* Wait for the network stack to be ready before proceeding.
+* iniche_net_ready indicates that TCP/IP stack is ready, and IP address is obtained.
+*/
+while (!iniche_net_ready)
+TK_SLEEP(1);
 
-  printf("\nSimple Socket Server starting up\n");
+/* Now that the stack is running, perform the application initialization steps */
 
-  /* Create the main simple socket server task. */
-  //TK_NEWTASK(&ssstask);
-  
-  /*create os data structures */
-  //SSSCreateOSDataStructs();
+/* Application Specific Task Launching Code Block Begin */
 
-  /* create the other tasks */
-  //SSSCreateTasks();
+printf("\nSimple Socket Server starting up\n");
 
-  /* Application Specific Task Launching Code Block End */
-  
-  /*This task is deleted because there is no need for it to run again */
-  //error_code = OSTaskDel(OS_PRIO_SELF);
-  //alt_uCOSIIErrorHandler(error_code, 0);
-  LCD_Init();
-  int sw, but;
-  char Text[16] = "TEXTO DE 16b";
-  LCD_Show_Text(Text);
-  char Text00[16] = "arquivoA.txt   ";
-  char Text01[16] = "arquivoB.txt   ";
-  char Text10[16] = "arquivoC.txt   ";
-  char Text11[16] = "invalido.txt   ";
-  char ArqI[32] = "ARQ INVALIDO !!!ARQ INVALIDO !!!";
-  char p1[16];
-  char p2[16];
-  char flag = 0; //0-> escolhendo, 1->scroll
-  char lastbut = 0x0F;
-  unsigned int linha1=0;
-  unsigned int linha2=16;
-  char choice = 0;
-  struct sockaddr_in sa;
-  int res;
-  int SocketFD;
-  char reqA[6]= "queroa";
-  char reqB[6]= "querob";
-  char reqC[6]= "queroc";
-  char buf[2000];
-  SocketFD = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
-  printf("Socket criado\n");
-  memset(&sa, 0, sizeof sa);
-  sa.sin_family = AF_INET;
-  sa.sin_port = htons(8910); // ALTERAR PORTA A SER UTILIZADA AQUI
-  res = inet_pton(AF_INET, "192.168.15.2", &sa.sin_addr); //ALTERAR O IP DO SERVIDOR AQUI??
-  if (connect(SocketFD, (struct sockaddr *)&sa, sizeof sa) == -1) {
-	perror("Falha de conexão");
-	close(SocketFD);
-	exit(EXIT_FAILURE);
-  } else {
-	  printf("Conectado");
-  }
-  while (1){  //While principal
+/* Create the main simple socket server task. */
+//TK_NEWTASK(&ssstask);
 
-	  	/*
-	    if (send(SocketFD, buf, sizeof(buf), 0) < 0) //exemplo de envio
-	    {
-	        perror("Send()");
-	        exit(EXIT_FAILURE);
-	    }else{
-	    	printf("Msg enviada: %s\n", buf);
-	    }
+/*create os data structures */
+//SSSCreateOSDataStructs();
 
-	    if (recv(SocketFD, buf, sizeof(buf), 0) < 0) //exemplo de recebimento
-	    {
-	        perror("Recv()");
-	        exit(EXIT_FAILURE);
-	    }else{
-	    	printf("Msg recebida: %s\n", buf);
-	    	memcpy(buf, original, 12 * sizeof(char));
-	    }
-	    msleep(1000);*/
+/* create the other tasks */
+//SSSCreateTasks();
+
+/* Application Specific Task Launching Code Block End */
+
+/*This task is deleted because there is no need for it to run again */
+//error_code = OSTaskDel(OS_PRIO_SELF);
+//alt_uCOSIIErrorHandler(error_code, 0);
+LCD_Init();
+int sw, but;
+char Text[16] = "TEXTO DE 16b";
+LCD_Show_Text(Text);
+char Text00[16] = "arquivoA.txt   ";
+char Text01[16] = "arquivoB.txt   ";
+char Text10[16] = "arquivoC.txt   ";
+char Text11[16] = "invalido.txt   ";
+char ArqI[32] = "ARQ INVALIDO !!!ARQ INVALIDO !!!";
+char p1[16];
+char p2[16];
+char msg[10];
+char psg2[10];
+char flag = 0; //0-> escolhendo, 1->scroll
+char lastbut = 0x0F;
+unsigned int linha1=0;
+unsigned int linha2=16;
+char choice = 0;
+struct sockaddr_in sa;
+int res;
+int SocketFD;
+int SocketBW;
+char req[6]= "tmstmp";
+char reqA[6]= "queroa";
+char reqB[6]= "querob";
+char reqC[6]= "queroc";
+char tmstmp[10]= "1562716720";
+char buf[2000];
+char buf2[2000];
+SocketFD = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
+SocketBW = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
+printf("Sockets criado\n");
+memset(&sa, 0, sizeof sa);
+sa.sin_family = AF_INET;
+sa.sin_port = htons(8910); // ALTERAR PORTA A SER UTILIZADA AQUI
+res = inet_pton(AF_INET, "192.168.15.2", &sa.sin_addr); //ALTERAR O IP DO SERVIDOR AQUI
+	if (connect(SocketFD, (struct sockaddr *)&sa, sizeof sa) == -1) {
+		perror("Falha na conexão do primeiro socket");
+		close(SocketFD);
+		exit(EXIT_FAILURE);}
+	else {
+		  printf("Conexão com servidor funcionando \n");
+	}
+
+	if (send(SocketFD, req, sizeof(reqA), 0) < 0) //Envia requisição para o servidor
+	{
+		perror("Send()");
+		exit(EXIT_FAILURE);
+	}else{
+		printf("Mensagem enviada: tmstmp\n");
+	}
+
+//	 if (recv(SocketFD, buf, sizeof(buf), 0) < 0) //recebimento da mensagem do servidor
+//	{
+//		//perror("Recv()");
+//		//exit(EXIT_FAILURE);
+//		 printf("Erro %s\n", buf);
+//	}else{
+//		printf("Msg recebida: %s\n", buf);
+//		memcpy(p1, buf, 16 * sizeof(char));
+//		memcpy(p2, &buf[16], 16 * sizeof(char));
+//	}
+//
+//	printf("Abrindo conexão com cliente\n");
+//	sa.sin_port = htons(8900); //Abre conexão com cliente na porta 8900
+//	if (connect(SocketBW, (struct sockaddr *)&sa, sizeof sa) == -1) {
+//	  perror("Falha na conexão do segundo socket\n");
+//	  close(SocketFD);
+//	  exit(EXIT_FAILURE);
+//	} else {
+//	 printf("Conexão com cliente funcionando\n");
+//	}
+//
+//	if (send(SocketBW, tmstmp, sizeof(tmstmp), 0) < 0) //exemplo de envio
+//	{
+//		perror("Send()");
+//		exit(EXIT_FAILURE);
+//	}else{
+//		printf("Msg enviada: %s\n", tmstmp);
+//	}
+
+	//Desconsiderar daqui pra baixo
+  int i = 0;
+
+  while (i == 1){//While principal, código da equipe antiga
+
 	  	sw = IORD_ALTERA_AVALON_PIO_DATA(SWITCH_PIO_BASE) & 0x03;
 		but = IORD_ALTERA_AVALON_PIO_DATA(BUTTON_PIO_BASE) & 0x0F;
 
 		  	if(flag == 0) // estado de escolha
 		  	{
-		  		printf("Dentro do if com flag == 0");
 		  		if(sw==0){LCD_Line2(); LCD_Show_Text(Text00);}
 		  		if(sw==1){LCD_Line2(); LCD_Show_Text(Text01);}
 		  		if(sw==2){LCD_Line2(); LCD_Show_Text(Text10);}
 		  		if(sw==3){LCD_Line2(); LCD_Show_Text(Text11);}
 
+		  		//*****Código André
+		  		//Enviar pra outro socket
+		  		if (send(SocketFD, reqA, sizeof(reqA), 0) < 0) //exemplo de envio
+				{
+					perror("Send()");
+					exit(EXIT_FAILURE);
+				}else{
+					printf("Msg enviada: queroa\n");
+				}
 		  		if(but == 13 && but != lastbut)
 		  		{
 		  			flag = 1;
@@ -250,7 +288,7 @@ void SSSInitialTask(void *task_data)
 		  		}
 		  	}else if(flag == 1) // scroll
 		  	{
-		  		printf("Dentro do if com flag == 0");
+		  		//printf("Dentro do if com flag == 0");
 		  		LCD_Line1();
 		  		LCD_Show_Text(p1);
 		  		LCD_Line2();

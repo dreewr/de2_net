@@ -21,7 +21,8 @@ component rtc
 	);
 end component;
 
-signal s_write_data: std_logic_vector(43 downto 0); 	
+signal s_write_data: std_logic_vector(43 downto 0); 
+signal s_data: std_logic_vector(43 downto 0); 	
 signal s_clk, s_en_wr, s_enable, s_reset: std_logic;
 
 begin
@@ -30,7 +31,8 @@ begin
 		clk => s_clk,
 		en_wr	=> s_en_wr,
 		enable => s_enable,
-		reset	=> s_reset
+		reset	=> s_reset,
+		data => s_data
 	);
 
 process

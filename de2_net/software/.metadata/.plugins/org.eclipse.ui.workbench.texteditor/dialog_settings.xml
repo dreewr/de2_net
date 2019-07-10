@@ -13,14 +13,16 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="Text[16]" key="selection"/>
+		<item value="" key="selection"/>
 		<list key="findhistory">
+			<item value="bad"/>
+			<item value="strange"/>
+			<item value="whoa"/>
 			<item value="Text[16]"/>
 			<item value="timeout"/>
 			<item value="iniche"/>
 			<item value="out"/>
 			<item value="dhcp"/>
-			<item value="rx_len"/>
 		</list>
 		<list key="replacehistory">
 		</list>

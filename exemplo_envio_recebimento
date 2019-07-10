@@ -1,0 +1,18 @@
+	
+	    if (send(SocketFD, buf, sizeof(buf), 0) < 0) //exemplo de envio
+	    {
+	        perror("Send()");
+	        exit(EXIT_FAILURE);
+	    }else{
+	    	printf("Msg enviada: %s\n", buf);
+	    }
+
+	    if (recv(SocketFD, buf, sizeof(buf), 0) < 0) //exemplo de recebimento
+	    {
+	        perror("Recv()");
+	        exit(EXIT_FAILURE);
+	    }else{
+	    	printf("Msg recebida: %s\n", buf);
+	    	memcpy(buf, original, 12 * sizeof(char));
+	    }
+	    msleep(1000);

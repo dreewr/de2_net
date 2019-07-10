@@ -7,7 +7,7 @@
 <stringAttribute key="byteStreamDeviceInstanceID" value="0"/>
 <booleanAttribute key="downloadProgram" value="true"/>
 <stringAttribute key="elfFile" value="C:\Users\User\Documents\logica_reconfiguravel\Projeosquartus\projeto_final\DE2_NET\software\simple_socket\simple_socket.elf"/>
-<stringAttribute key="elfUserFile" value="C:\Users\User\Documents\logica_reconfiguravel\Projeosquartus\projeto_final\DE2_NET\software\simple_socket\simple_socket.elf"/>
+<stringAttribute key="elfUserFile" value="C:\Users\User\Documents\de2_net\de2_net\software\simple_socket\simple_socket.elf"/>
 <booleanAttribute key="enableElfUserFile" value="true"/>
 <stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_ID" value="com.altera.debug.cdi.gdb.plugin.Nios2GdbCdiDebugger"/>
 <stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_START_MODE" value="run"/>

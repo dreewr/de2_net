@@ -1,16 +1,16 @@
-# Reading C:/altera/13.0/modelsim_ase/tcl/vsim/pref.tcl 
+# Reading C:/altera/13.0sp1/modelsim_ase/tcl/vsim/pref.tcl 
 # do RTC_run_msim_rtl_vhdl.do 
 # if {[file exists rtl_work]} {
 # 	vdel -lib rtl_work -all
 # }
 # vlib rtl_work
 # vmap work rtl_work
-# Copying C:\altera\13.0\modelsim_ase\win32aloem/../modelsim.ini to modelsim.ini
+# Copying C:\altera\13.0sp1\modelsim_ase\win32aloem/../modelsim.ini to modelsim.ini
 # Modifying modelsim.ini
-# ** Warning: Copied C:\altera\13.0\modelsim_ase\win32aloem/../modelsim.ini to modelsim.ini.
+# ** Warning: Copied C:\altera\13.0sp1\modelsim_ase\win32aloem/../modelsim.ini to modelsim.ini.
 #          Updated modelsim.ini.
 # 
-# vcom -93 -work work {D:/Documents/a906867/Projeosquartus/projeto_final/rtc/rtc.vhd}
+# vcom -93 -work work {C:/Users/User/Documents/de2_net/rtc/rtc.vhd}
 # Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -19,7 +19,7 @@
 # -- Compiling entity rtc
 # -- Compiling architecture rtc_behave of rtc
 # 
-do D:/Documents/a906867/Projeosquartus/projeto_final/rtc/rtc.do
+vcom -reportprogress 300 -work work C:/Users/User/Documents/de2_net/rtc/rtc.vhd
 # Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -27,6 +27,7 @@ do D:/Documents/a906867/Projeosquartus/projeto_final/rtc/rtc.do
 # -- Loading package NUMERIC_STD
 # -- Compiling entity rtc
 # -- Compiling architecture rtc_behave of rtc
+vcom -reportprogress 300 -work work C:/Users/User/Documents/de2_net/rtc/rtc_tb.vhd
 # Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -34,14 +35,23 @@ do D:/Documents/a906867/Projeosquartus/projeto_final/rtc/rtc.do
 # -- Loading package NUMERIC_STD
 # -- Compiling entity rtc_tb
 # -- Compiling architecture rtc_behave of rtc_tb
-# vsim rtl_work.rtc_tb(rtc_behave) 
+vsim +altera -do RTC_run_msim_rtl_vhdl.do -l msim_transcript -gui rtl_work.rtc_tb
+# vsim +altera -do RTC_run_msim_rtl_vhdl.do -l msim_transcript -gui rtl_work.rtc_tb 
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
 # Loading ieee.numeric_std(body)
 # Loading rtl_work.rtc_tb(rtc_behave)
 # Loading rtl_work.rtc(rtc_behave)
-do D:/Documents/a906867/Projeosquartus/projeto_final/rtc/rtc.do
+# do RTC_run_msim_rtl_vhdl.do 
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Modifying modelsim.ini
+# 
+# vcom -93 -work work {C:/Users/User/Documents/de2_net/rtc/rtc.vhd}
 # Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -49,43 +59,19 @@ do D:/Documents/a906867/Projeosquartus/projeto_final/rtc/rtc.do
 # -- Loading package NUMERIC_STD
 # -- Compiling entity rtc
 # -- Compiling architecture rtc_behave of rtc
-# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity rtc_tb
-# -- Compiling architecture rtc_behave of rtc_tb
-# vsim rtl_work.rtc_tb(rtc_behave) 
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading ieee.numeric_std(body)
-# Loading rtl_work.rtc_tb(rtc_behave)
-# Loading rtl_work.rtc(rtc_behave)
-do D:/Documents/a906867/Projeosquartus/projeto_final/rtc/rtc.do
-# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity rtc
-# -- Compiling architecture rtc_behave of rtc
-# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity rtc_tb
-# -- Compiling architecture rtc_behave of rtc_tb
-# vsim rtl_work.rtc_tb(rtc_behave) 
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading ieee.numeric_std(body)
-# Loading rtl_work.rtc_tb(rtc_behave)
-# Loading rtl_work.rtc(rtc_behave)
-do D:/Documents/a906867/Projeosquartus/projeto_final/rtc/rtc.do
+# 
+add wave -position insertpoint  \
+sim:/rtc_tb/s_write_data \
+sim:/rtc_tb/s_clk \
+sim:/rtc_tb/s_en_wr \
+sim:/rtc_tb/s_enable \
+sim:/rtc_tb/s_reset
+run 20000us
+run 20000us
+run 20000us
+run 20000us
+run 20000us
+vcom -reportprogress 300 -work work C:/Users/User/Documents/de2_net/rtc/rtc.vhd
 # Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -93,6 +79,7 @@ do D:/Documents/a906867/Projeosquartus/projeto_final/rtc/rtc.do
 # -- Loading package NUMERIC_STD
 # -- Compiling entity rtc
 # -- Compiling architecture rtc_behave of rtc
+vcom -reportprogress 300 -work work C:/Users/User/Documents/de2_net/rtc/rtc_tb.vhd
 # Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -100,14 +87,48 @@ do D:/Documents/a906867/Projeosquartus/projeto_final/rtc/rtc.do
 # -- Loading package NUMERIC_STD
 # -- Compiling entity rtc_tb
 # -- Compiling architecture rtc_behave of rtc_tb
-# vsim rtl_work.rtc_tb(rtc_behave) 
+# ** Error: C:/Users/User/Documents/de2_net/rtc/rtc_tb.vhd(47): (vcom-1136) Unknown identifier "data".
+# 
+# ** Error: C:/Users/User/Documents/de2_net/rtc/rtc_tb.vhd(65): VHDL Compiler exiting
+# Load canceled
+vcom -reportprogress 300 -work work C:/Users/User/Documents/de2_net/rtc/rtc_tb.vhd
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity rtc_tb
+# -- Compiling architecture rtc_behave of rtc_tb
+# ** Error: C:/Users/User/Documents/de2_net/rtc/rtc_tb.vhd(47): (vcom-1136) Unknown identifier "data".
+# 
+# ** Error: C:/Users/User/Documents/de2_net/rtc/rtc_tb.vhd(65): VHDL Compiler exiting
+# C:/altera/13.0sp1/modelsim_ase/win32aloem/vcom failed.
+
+vcom -reportprogress 300 -work work C:/Users/User/Documents/de2_net/rtc/rtc_tb.vhd
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity rtc_tb
+# -- Compiling architecture rtc_behave of rtc_tb
+vsim +altera -do RTC_run_msim_rtl_vhdl.do -l msim_transcript -gui rtl_work.rtc_tb
+# vsim +altera -do RTC_run_msim_rtl_vhdl.do -l msim_transcript -gui rtl_work.rtc_tb 
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
 # Loading ieee.numeric_std(body)
 # Loading rtl_work.rtc_tb(rtc_behave)
 # Loading rtl_work.rtc(rtc_behave)
-do D:/Documents/a906867/Projeosquartus/projeto_final/rtc/rtc.do
+# do RTC_run_msim_rtl_vhdl.do 
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Modifying modelsim.ini
+# 
+# vcom -93 -work work {C:/Users/User/Documents/de2_net/rtc/rtc.vhd}
 # Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -115,83 +136,12 @@ do D:/Documents/a906867/Projeosquartus/projeto_final/rtc/rtc.do
 # -- Loading package NUMERIC_STD
 # -- Compiling entity rtc
 # -- Compiling architecture rtc_behave of rtc
-# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity rtc_tb
-# -- Compiling architecture rtc_behave of rtc_tb
-# vsim rtl_work.rtc_tb(rtc_behave) 
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading ieee.numeric_std(body)
-# Loading rtl_work.rtc_tb(rtc_behave)
-# Loading rtl_work.rtc(rtc_behave)
-do D:/Documents/a906867/Projeosquartus/projeto_final/rtc/rtc.do
-# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity rtc
-# -- Compiling architecture rtc_behave of rtc
-# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity rtc_tb
-# -- Compiling architecture rtc_behave of rtc_tb
-# vsim rtl_work.rtc_tb(rtc_behave) 
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading ieee.numeric_std(body)
-# Loading rtl_work.rtc_tb(rtc_behave)
-# Loading rtl_work.rtc(rtc_behave)
-do D:/Documents/a906867/Projeosquartus/projeto_final/rtc/rtc.do
-# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity rtc
-# -- Compiling architecture rtc_behave of rtc
-# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity rtc_tb
-# -- Compiling architecture rtc_behave of rtc_tb
-# vsim rtl_work.rtc_tb(rtc_behave) 
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading ieee.numeric_std(body)
-# Loading rtl_work.rtc_tb(rtc_behave)
-# Loading rtl_work.rtc(rtc_behave)
-do D:/Documents/a906867/Projeosquartus/projeto_final/rtc/rtc.do
-# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity rtc
-# -- Compiling architecture rtc_behave of rtc
-# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity rtc_tb
-# -- Compiling architecture rtc_behave of rtc_tb
-# vsim rtl_work.rtc_tb(rtc_behave) 
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading ieee.numeric_std(body)
-# Loading rtl_work.rtc_tb(rtc_behave)
-# Loading rtl_work.rtc(rtc_behave)
+# 
+add wave -position insertpoint  \
+sim:/rtc_tb/s_write_data \
+sim:/rtc_tb/s_data \
+sim:/rtc_tb/s_clk \
+sim:/rtc_tb/s_en_wr \
+sim:/rtc_tb/s_enable \
+sim:/rtc_tb/s_reset
+run 100ms
