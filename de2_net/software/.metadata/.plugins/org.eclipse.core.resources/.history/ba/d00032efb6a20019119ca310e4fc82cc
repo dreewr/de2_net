@@ -130,19 +130,17 @@ void SSSInitialTask(void *task_data)
   char choice = 0;
   struct sockaddr_in sa;
   int res;
-  int SocketFD, SocketBW;
+  int SocketFD;
   char reqA[6]= "queroa";
   char reqB[6]= "querob";
   char reqC[6]= "queroc";
   char buf[2000];
   SocketFD = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
-  SocketBW = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
-  printf("Sockets criados\n");
+  printf("Socket criado\n");
   memset(&sa, 0, sizeof sa);
   sa.sin_family = AF_INET;
   sa.sin_port = htons(8910); // ALTERAR PORTA A SER UTILIZADA AQUI
   res = inet_pton(AF_INET, "192.168.15.2", &sa.sin_addr); //ALTERAR O IP DO SERVIDOR AQUI??
-
   if (connect(SocketFD, (struct sockaddr *)&sa, sizeof sa) == -1) {
 	perror("Falha de conexão");
 	close(SocketFD);
@@ -150,19 +148,7 @@ void SSSInitialTask(void *task_data)
   } else {
 	  printf("Conectado");
   }
-
-  sa.sin_port = htons(8900);
-
-  if (connect(SocketBW, (struct sockaddr *)&sa, sizeof sa) == -1) {
-  	perror("Falha de conexão");
-  	close(SocketBW);
-  	exit(EXIT_FAILURE);
-    } else {
-  	  printf("Conectado");
-    }
-
-  int i = 1;
-  while (i == 0){  //While principal
+  while (1){  //While principal
 
 	  	/*
 	    if (send(SocketFD, buf, sizeof(buf), 0) < 0) //exemplo de envio
@@ -187,7 +173,7 @@ void SSSInitialTask(void *task_data)
 
 		  	if(flag == 0) // estado de escolha
 		  	{
-
+		  		printf("Dentro do if com flag == 0");
 		  		if(sw==0){LCD_Line2(); LCD_Show_Text(Text00);}
 		  		if(sw==1){LCD_Line2(); LCD_Show_Text(Text01);}
 		  		if(sw==2){LCD_Line2(); LCD_Show_Text(Text10);}
