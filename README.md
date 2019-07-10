@@ -32,10 +32,20 @@ Projeto de Lógica Reconfigurável de criação de conexão TCP/IP através de S
     - Após descobrir o IP correto da máquina que está abrindo o projeto, alterar os arquivos "tcpserver.py", "tctclient.py" que estão na pasta raiz do projeto
     - Dar um "build" no projeto através da instrução "Build All" disponível na aba "Project" 
     - É aconselhável na primeira compilação ir em "Run Configurations", e em "Project" selecionar "Enable browse ...ELF File" escolher manualmente o ELF file do respectivo projeto, cuidadndo para pegar o ELF da pasta correto
+     - Usando o CMD e tendo o python instalado, rode os servidores
+   <img src = "/cmd1.PNG"  width="1000" height="200">
+       
+   <img src = "/cmd2.PNG"  width="1000" height="200">
+
+    - Em seguida rode o projeto do Eclipse. O resultado esperado deve ser algo parecido com isso
+    <img src = "/conected.PNG"  width="1000" height="500">
     
-   - Problemas encontrados e workarounds:
-      - O tutorial fornece um componente qsys bastante complexo, e percebemos que será trabalhoso refatorar a entidade top-level para um
-      componente vhdl, ainda estamos no processo de ver como integrar o RTC pronto 
+ - Problemas encontrados e workarounds:  
+    - O tutorial fornece um componente qsys bastante complexo, e percebemos que será trabalhoso refatorar a entidade top-level para um
+      componente vhdl, ainda estamos no processo de ver como integrar o RTC pronto
+    - Devido a um bug bastante estranho tivemos que (para essa entrega) reverter o código[desse commit](https://github.com/dreewr/de2_net/commit/ef3e521d36fa8d3e6ca5a2e7a84a81874908963e) para uma versão mais simples, nenhuma solução para o bug foi encontrada e nem resetando todos os elementos do projeto o bug sumiu.
+      
+     
 
 - TODOS:
   
