@@ -1,0 +1,42 @@
+
+**** Build of configuration Nios II for project simple_socket ****
+
+make all 
+      1 [main] sh 10276 find_fast_cwd: WARNING: Couldn't compute FAST_CWD pointer.  Please report this problem to
+the public mailing list cygwin@cygwin.com
+     53 [main] sh 5016 find_fast_cwd: WARNING: Couldn't compute FAST_CWD pointer.  Please report this problem to
+the public mailing list cygwin@cygwin.com
+      1 [main] echo 9184 find_fast_cwd: WARNING: Couldn't compute FAST_CWD pointer.  Please report this problem to
+the public mailing list cygwin@cygwin.com
+Info: Building ../simple_socket_bsp/
+make --no-print-directory -C ../simple_socket_bsp/
+      1 [main] pwd 10720 find_fast_cwd: WARNING: Couldn't compute FAST_CWD pointer.  Please report this problem to
+the public mailing list cygwin@cygwin.com
+      2 [main] sh 1984 find_fast_cwd: WARNING: Couldn't compute FAST_CWD pointer.  Please report this problem to
+the public mailing list cygwin@cygwin.com
+makefile:758: Warning: SOPC File J:/Altera/13.0sp1/projects/DE2_CD/DE2_demonstrations_Qsys/DE2_NET/system_0.sopcinfo could not be found.
+      1 [main] sh 10296 find_fast_cwd: WARNING: Couldn't compute FAST_CWD pointer.  Please report this problem to
+the public mailing list cygwin@cygwin.com
+[BSP build complete]
+      1 [main] true 11552 find_fast_cwd: WARNING: Couldn't compute FAST_CWD pointer.  Please report this problem to
+the public mailing list cygwin@cygwin.com
+      2 [main] echo 1848 find_fast_cwd: WARNING: Couldn't compute FAST_CWD pointer.  Please report this problem to
+the public mailing list cygwin@cygwin.com
+Info: Linking simple_socket.elf
+nios2-elf-g++  -T'../simple_socket_bsp//linker.x' -msys-crt0='../simple_socket_bsp//obj/HAL/src/crt0.o' -msys-lib=ucosii_bsp -L../simple_socket_bsp/   -Wl,-Map=simple_socket.map   -O0 -g -Wall   -EL -mno-hw-div -mhw-mul -mno-hw-mulx  -o simple_socket.elf obj/default/LCD.o obj/default/SSS_DE2_115.o obj/default/alt_error_handler.o obj/default/dm9000a.o obj/default/iniche_init.o obj/default/led.o obj/default/network_utilities.o obj/default/simple_socket_server.o obj/default/tse_my_system.o -lm 
+nios2-elf-insert simple_socket.elf --thread_model ucosii --cpu_name cpu_0 --qsys true --simulation_enabled false --id 0 --sidp 0x1a82108 --timestamp 1530840655 --stderr_dev jtag_uart_0 --stdin_dev jtag_uart_0 --stdout_dev jtag_uart_0 --sopc_system_name system_0 --quartus_project_dir "C:/Users/User/Documents/de2/DE2_NET"
+      1 [main] sh 8620 find_fast_cwd: WARNING: Couldn't compute FAST_CWD pointer.  Please report this problem to
+the public mailing list cygwin@cygwin.com
+      2 [main] uname 2340 find_fast_cwd: WARNING: Couldn't compute FAST_CWD pointer.  Please report this problem to
+the public mailing list cygwin@cygwin.com
+      1 [main] sh 11944 find_fast_cwd: WARNING: Couldn't compute FAST_CWD pointer.  Please report this problem to
+the public mailing list cygwin@cygwin.com
+      1 [main] bash 11144 child_info_fork::abort: C:\altera\13.0sp1\quartus\bin\cygwin\bin\cygiconv-2.dll: Loaded to different address: parent(0x690000) != child(0x810000)
+/cygdrive/c/altera/13.0sp1/nios2eds/bin/nios2-stackreport: fork: retry: Resource temporarily unavailable
+      1 [main] bash 5368 child_info_fork::abort: C:\altera\13.0sp1\quartus\bin\cygwin\bin\cygiconv-2.dll: Loaded to different address: parent(0x690000) != child(0x800000)
+/cygdrive/c/altera/13.0sp1/nios2eds/bin/nios2-stackreport: fork: retry: Resource temporarily unavailable
+/cygdrive/c/altera/13.0sp1/nios2eds/bin/nios2-stackreport: fork: Resource temporarily unavailable
+make: *** [simple_socket.elf] Error 254
+make: *** Deleting file `simple_socket.elf'
+
+**** Build Finished ****
