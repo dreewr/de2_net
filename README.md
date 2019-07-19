@@ -32,9 +32,10 @@ Projeto de Lógica Reconfigurável de criação de conexão TCP/IP através de S
     - É aconselhável na primeira compilação ir em "Run Configurations", e em "Project" selecionar "Enable browse ...ELF File" escolher manualmente o ELF file do respectivo projeto, cuidadndo para pegar o ELF da pasta correto
      - Usando o CMD e tendo o python instalado, rode os servidores
       <img src = "images/cmd1.PNG"  width="1000" height="200">
-      
       <img src = "images/cmd2.PNG"  width="1000" height="200">
+      
     - Em seguida rode o projeto do Eclipse. O resultado esperado deve ser algo parecido com isso (prints de uma versão inicial do sistema)
+    
       <img src = "images/conected.PNG"  width="1000" height="500">
   
  - Testbenchs
@@ -63,7 +64,7 @@ A criação do componente Qsys seguiu [esse tutorial]  (https://github.com/dreew
     
     E os dados gerados pelo BSP no system.h
     
-    <img src = "/images/17-07/system_h.PNG"  width="400" height="300"> 
+    <img src = "/images/17-07/system_h.PNG"  width="400" height="250"> 
    
    - A parte de comunicação entre os sockets está funcionando, com os dois sockets trocando informações com o Nios como pode ser visto [aqui]()
     - Os componentes em vhdl estão testados (como mostrado na seção do testbench), 
