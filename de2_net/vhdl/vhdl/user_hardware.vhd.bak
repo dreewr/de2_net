@@ -45,6 +45,7 @@ architecture behave of user_hardware is
 	signal div_out :std_logic:='X'; -- saída 1 do divisor
 	
 	--Signal
+	signal nios_out_temp : std_logic_vector(31 downto 0);
 	
 	begin
 	
@@ -74,5 +75,25 @@ architecture behave of user_hardware is
 	div_reset <= rst;
 	rtc_reset <= rst;
 	end process;
+	
+	-- Segundo processo
+	process (rst, clk)
+	
+	begin --Process code
+	
+		if  (rst = '1') then
+			nios_out_temp <= (others =>'0'); 
+		elsif (clk'event and clk = '1') then
+			if en_wr = '1' then
+				nios_out_temp <= nios_in;--"00" & ;
+			end if; 
+			if enable = '1' then
+				nios_out_temp <= std_logic_vector(unsigned(nios_out_temp) + 1);
+			end if; 
+			
+		end if;
+	
+	end process;
+	
 	
 end architecture;

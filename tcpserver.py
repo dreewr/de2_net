@@ -19,18 +19,20 @@ conn, addr = s.accept()
 
 print ('IP conectado:', addr)
 
-while 1: #1
+cont = 1
+while cont==1: #1
     data = conn.recv(BUFFER_SIZE)
     if not data: break
-    print ("Dado recebido:", data.decode("utf-8"))
-  
-    if (data.decode("utf-8") == "tmstmp"):
-        ts = calendar.timegm(time.gmtime())
-        ts = str(ts)
-        message = bytearray()
-        message.extend(map(ord,ts))
-        conn.send(message) #corrigir pra enviar o horário do computador formatado
-        print ("Dado enviado:", message)
+    print ("Comando recebido:", data.decode("utf-8"))
+    #if (data.decode("utf-8") == "tmstmp"):
+    ts = calendar.timegm(time.gmtime())
+    ts = str(ts)
+    message = bytearray()
+    message.extend(map(ord,ts))
+    print ("Timestamp atual:", message.decode("utf-8"))
+    conn.send(message) #corrigir pra enviar o horário do computador formatado
+    print ("Timestamp enviado")
+    cont=0
 
 conn.close()
 
