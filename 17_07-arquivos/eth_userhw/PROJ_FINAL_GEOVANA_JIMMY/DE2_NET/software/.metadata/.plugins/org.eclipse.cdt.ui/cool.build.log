@@ -1,0 +1,10 @@
+
+**** Build of configuration Nios II for project cool ****
+
+make all 
+Info: Building ../cool_bsp/
+make --no-print-directory -C ../cool_bsp/
+[BSP build complete]
+[cool build complete]
+
+**** Build Finished ****
