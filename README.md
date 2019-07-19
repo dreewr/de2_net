@@ -56,13 +56,12 @@ O componente QSYS final (refeito no dia 18/07) ficou com o seguinte barramento
 
     - Conseguimos criar um projeto com um componente NiosII capaz de se comunicar usando ethernet, integrado a um userHardware. Conseguimos ler e escrever nos bits desse userHardware usando as funções, mas não tivemos tempo hábil para finalizar a lógica de troca de dados entre o userHardware e o cliente que requer dados da placa. 
     Na imagem, está um exemplo simples de como fazer uma troca de dados com o userHardware
-   
-   
-   <img src = "/images/17-07/user_hw_integrado_simples.PNG"  width="400" height="400"> 
+ 
+   <img src = "/images/17-07/user_hw_integrado_simples.PNG"  width="800" height="700"> 
     
     E os dados gerados pelo BSP no sysyem.h
     
-    <img src = "/images/17-07/system_h.PNG"  width="200" height="150"> 
+    <img src = "/images/17-07/system_h.PNG"  width="400" height="300"> 
    
    - A parte de comunicação entre os sockets está funcionando, com os dois sockets trocando informações com o Nios como pode ser visto [aqui]()
     - Os componentes em vhdl estão testados (como mostrado na seção do testbench), 
