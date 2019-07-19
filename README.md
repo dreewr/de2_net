@@ -20,9 +20,8 @@ Projeto de Lógica Reconfigurável de criação de conexão TCP/IP através de S
     - Os .vhd do projeto podem ser vistos na pasta de2_net>vhdl
   
 - Abrindo o projeto 
-   Durante o desenvolvimento do projeto várias inconsistências apareceram para abrir, compilar e rodar projetos de terceiros. Nem mesmo uma versão salva aqui no repositório, considerada "estável" rodou no nosso ambiente após certo tempo, devido a alguma variável de contexto das IDEs usadas no desenvolvimento. O processo sendo usado para abrir e testar o sistema consiste em: 
- 
-    - Será necessário gerar novamente os componentes do Qsys, adicionar o componente e os arquivos gerados como de costume
+
+    - No Quartus, Será necessário gerar novamente os componentes do Qsys, adicionar o componente e os arquivos gerados como de costume
     - Compilar o projeto, ligar o cabo ethernet na placa em um ponto de rede e rodar o projeto na placa pelo programmer 
     - Abrir o Eclipse, ir em File> Switch Workplace e procurar escolher a pasta "software" dentro do projeto "de2_net"
     - Dar um "clean" no projeto simple_socket e no respectivo bsp
@@ -33,46 +32,50 @@ Projeto de Lógica Reconfigurável de criação de conexão TCP/IP através de S
     - É aconselhável na primeira compilação ir em "Run Configurations", e em "Project" selecionar "Enable browse ...ELF File" escolher manualmente o ELF file do respectivo projeto, cuidadndo para pegar o ELF da pasta correto
      - Usando o CMD e tendo o python instalado, rode os servidores
       <img src = "images/cmd1.PNG"  width="1000" height="200">
+      
       <img src = "images/cmd2.PNG"  width="1000" height="200">
     - Em seguida rode o projeto do Eclipse. O resultado esperado deve ser algo parecido com isso (prints de uma versão inicial do sistema)
       <img src = "images/conected.PNG"  width="1000" height="500">
   
- - Testbench do funcionamento do RTC
- O testbench do funcionamento do componente RTC produziu a seguinte resposta:
- <img src = "/images/rtc_tb.PNG"  width="1000" height="150">
- É esperado que esse componente, estando habilitado e após receber um input, forneça timestamps crescentes, numa frequeência de 1kHz
- 
+ - Testbenchs
+     - O testbench do funcionamento do componente RTC produziu a seguinte resposta:
+     <img src = "/images/rtc_tb.PNG"  width="1000" height="150">
+     --É esperado que esse componente, estando habilitado e após receber um input, forneça timestamps crescentes, numa frequeência de 1kHz
+     - O testbench da avalon também produziu o resultado esperado, lembrando que o readdata vai ser atualizado a cada N ciclos de clock, onde N é o número que estipulamos no divisor de clock. No testbench diminuimos de 50000 para 5 pra ser possível visualizar o funcionamento 
+       <img src = "/images/18-07/testbench_avalon.PNG"  width="1000" height="150">
+
 - Criação do componente do Qsys
 A criação do componente Qsys seguiu [esse tutorial]  (https://github.com/dreewr/de2_net/blob/master/making_qsys_components%20(7).pdf) e também o projeto do Lucca como exemplo. Para a criação foram usados os vhdl avalon_interface(top-level), user_hardware, divisor e o rtc. Imagens das janelas de criação do componente podem ser visualizadas [aqui](https://github.com/dreewr/de2_net/blob/master/images/mapeamento%20qsys.PNG), [aqui](https://github.com/dreewr/de2_net/blob/master/images/cria%C3%A7%C3%A3o_componente.PNG) e [aqui](https://github.com/dreewr/de2_net/blob/master/images/componente%20qsys.PNG)
-O componente QSYS final (refeito no dia 18/07) ficou com o seguinte barramento
-<img src = "/images/18-07/user_hardware_qsys.jpeg"  width="600" height="400">
 
 - Criação de um novo projeto
     - No Eclipse, crie um novo projeto + BSP from template
-    - Copie e sobrecreva esses arquivos dentro da pasta do projeto a partir do exemplo do Jimmy e Giovanna
-    - "Project > Clean..." para automaticamente limpar e 
+    - [Copie e sobrecreva esses arquivos](https://github.com/dreewr/de2_net/blob/master/images/17-07/arquivos%20copiados.PNG) dentro da pasta do projeto a partir do exemplo do Jimmy e Giovanna
+    - "Project > Clean..." para automaticamente limpar
+    - Ajuste o iniche para que use as constantes relativas ao system.h gerado pelo BSP
     
-- Status atual do projeto (Update em 18/07)
-
-    - Conseguimos criar um projeto com um componente NiosII capaz de se comunicar usando ethernet, integrado a um userHardware. Conseguimos ler e escrever nos bits desse userHardware usando as funções, mas não tivemos tempo hábil para finalizar a lógica de troca de dados entre o userHardware e o cliente que requer dados da placa. 
-    Na imagem, está um exemplo simples de como fazer uma troca de dados com o userHardware
+- Status atual do projeto (Update em 19/07)
+    - O projeto completo está na pasta de2_net, com o programa do Nios na pasta [demo](https://github.com/dreewr/de2_net/tree/master/de2_net/software/demo)
+    - Conseguimos criar um projeto com um componente NiosII capaz de se comunicar usando ethernet, integrado a um userHardware. Conseguimos ler e escrever nos bits desse userHardware usando as funções, mas tivemos que fazer a lógica da atualização do timestamp diretamente no C (escreve e lê no userHardware, mas não automaticamente).
+    
+   Na imagem, está um exemplo simples de como fazer uma troca de dados com o userHardware
  
-   <img src = "/images/17-07/user_hw_integrado_simples.PNG"  width="800" height="700"> 
+    <img src = "/images/17-07/user_hw_integrado_simples.PNG"  width="700" height="520"> 
     
-    E os dados gerados pelo BSP no sysyem.h
+    E os dados gerados pelo BSP no system.h
     
     <img src = "/images/17-07/system_h.PNG"  width="400" height="300"> 
    
    - A parte de comunicação entre os sockets está funcionando, com os dois sockets trocando informações com o Nios como pode ser visto [aqui]()
     - Os componentes em vhdl estão testados (como mostrado na seção do testbench), 
-    - A última versão estável do projeto está realizando a comunicação entre dois sockets, um cliente (mas que pode ser ampliado para vários clientes) e um servidor que fornece dados. O funcionamento é o seguinte: as conexões entre os sockets são feitas, o Nios requisita a informação pro servidor que retorna o timestamp atual. Em seguida o Nios processa esse dado (não está usando o userHardware como almejado, a ser mostrado na seção de problemas) e envia para o cliente, que no nosso caso é um executável python.
-        --[Demonstração do funcionamento da troca de sockets](https://youtu.be/BLn3DV-bX4I)
-   <img src = "images/funcionamento2.png"  width="600" height="360">
-   
+    - A última versão estável do projeto está realizando a comunicação entre dois sockets, um cliente (mas que pode ser ampliado para vários clientes) e um servidor que fornece dados. O funcionamento é o seguinte: as conexões entre os sockets são feitas, o Nios requisita a informação pro servidor que retorna o timestamp atual. Em seguida o Nios processa esse dado lendo e escrevendo do userHardware, e usando um delay para incrementar o timestamp enviado 
+        --[Demonstração do funcionamento da comunicação + userHardware](https://youtu.be/9SA49bZ5x3M)
+        --[Print da comunicação entre Nios + userHardware, cliente e servidor] (https://github.com/dreewr/de2_net/blob/master/images/18-07/func_final.PNG)
+
+
 - Referências e tutoriais úteis 
-    - [Nios II Developer Handbook] (https://github.com/dreewr/de2_net/blob/master/niosII%20-%20developer%20handbook.pdf) Capítulos 7 e 8
-    - [Criando userHardware com o Qsys]  (https://github.com/dreewr/de2_net/blob/master/making_qsys_components%20(7).pdf)
-    - [Projeto exemplo Mateus e Natan] (https://drive.google.com/drive/folders/1dg1V-4HZBoP_-wds2wTdr0P7JWgq_3xJ)
+    - Nios II Developer Handbook https://github.com/dreewr/de2_net/blob/master/niosII%20-%20developer%20handbook.pdf Capítulo 7
+    - Criando userHardware com o Qsys  https://github.com/dreewr/de2_net/blob/master/making_qsys_components%20(7).pdf
+    - Projeto exemplo Mateus e Natan https://drive.google.com/drive/folders/1dg1V-4HZBoP_-wds2wTdr0P7JWgq_3xJ
    
  - Problemas encontrados e workarounds (quando possível):  
  No percurso de desenvolvimento, apareceram inúmeros erros, bugs e problemas intratáveis que impediram a finalização do projeto como desejado
