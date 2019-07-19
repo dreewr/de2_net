@@ -68,8 +68,8 @@ A criação do componente Qsys seguiu [esse tutorial]  (https://github.com/dreew
    - A parte de comunicação entre os sockets está funcionando, com os dois sockets trocando informações com o Nios como pode ser visto [aqui]()
     - Os componentes em vhdl estão testados (como mostrado na seção do testbench), 
     - A última versão estável do projeto está realizando a comunicação entre dois sockets, um cliente (mas que pode ser ampliado para vários clientes) e um servidor que fornece dados. O funcionamento é o seguinte: as conexões entre os sockets são feitas, o Nios requisita a informação pro servidor que retorna o timestamp atual. Em seguida o Nios processa esse dado lendo e escrevendo do userHardware, e usando um delay para incrementar o timestamp enviado 
-        --[Demonstração do funcionamento da comunicação + userHardware](https://youtu.be/9SA49bZ5x3M)
-        --[Print da comunicação entre Nios + userHardware, cliente e servidor] (https://github.com/dreewr/de2_net/blob/master/images/18-07/func_final.PNG)
+    - [Demonstração do funcionamento da comunicação + userHardware](https://youtu.be/9SA49bZ5x3M)
+    - [Print da comunicação entre Nios + userHardware, cliente e servidor](https://github.com/dreewr/de2_net/blob/master/images/18-07/func_final.PNG)
 
 
 - Referências e tutoriais úteis 
